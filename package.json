@@ -29,6 +29,7 @@
     "express": "^4.14.0",
     "ffmpeg-binaries": "^3.2.2-3",
     "node-opus": "^0.2.7",
+    "opusscript": "0.0.4",
     "rollbar": "^2.2.7",
     "underscore": "^1.8.3"
   },

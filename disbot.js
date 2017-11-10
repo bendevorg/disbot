@@ -41,10 +41,13 @@ client.on('message', message => {
   if (message.content === '/join') {
     // Only try to join the sender's voice channel if they are in one themselves
     if (message.member.voiceChannel) {
-      message.member.voiceChannel.join()
+      let voiceChannel = message.member.voiceChannel;
+      console.log(voiceChannel);
+      voiceChannel.join()
         .then(voiceConnection => { // Connection is an instance of VoiceConnection
           message.reply('I have successfully connected to the channel!');
-          const dispatcher = voiceConnection.playFile('../audios/test.mp3');
+          const dispatcher = voiceConnection.playFile('./test.mp3');
+          console.log(dispatcher.time);
           dispatcher.on('start', () => {
             console.log('omae wa mo');
           });
