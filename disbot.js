@@ -20,15 +20,12 @@ dotenv.config();
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const player = require('./player');
+
+let voiceChannels = [];
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-});
-
-client.on('message', msg => {
-  if (msg.content === 'ping') {
-    msg.reply('Pong!');
-  }
 });
 
 client.login(process.env.DISCORD_TOKEN);
@@ -40,17 +37,14 @@ client.on('message', message => {
 
   if (message.content === '/join') {
     // Only try to join the sender's voice channel if they are in one themselves
-    if (message.member.voiceChannel) {
-      let voiceChannel = message.member.voiceChannel;
-      console.log(voiceChannel);
-      voiceChannel.join()
+    if (message.member.voiceChannel && voiceChannels.indexOf(message.member.voiceChannel.id)) {
+      voiceChannels.push(message.member.voiceChannel.id);
+      voiceChannels.queue = [];
+      voiceChannels.queue.push('./audios/omae_wa_mou.mp3');
+      voiceChannels.queue.push('./audios/nani.mp3');
+      message.member.voiceChannel.join()
         .then(voiceConnection => { // Connection is an instance of VoiceConnection
-          message.reply('I have successfully connected to the channel!');
-          const dispatcher = voiceConnection.playFile('./test.mp3');
-          console.log(dispatcher.time);
-          dispatcher.on('start', () => {
-            console.log('omae wa mo');
-          });
+          player(voiceConnection, voiceChannels.queue);
         })
         .catch(console.log);
     } else {
