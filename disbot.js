@@ -18,37 +18,49 @@ module.exports = app;
 const dotenv = require('dotenv');
 dotenv.config();
 
+const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const player = require('./player');
 
-let voiceChannels = [];
-
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-});
+let voiceChannels = [{
+  id: '144890708875018242',
+  voiceConnection: null,
+  receiver: null,
+  queue: [],
+  playing: false,
+}];
 
 client.login(process.env.DISCORD_TOKEN);
 
-client.on('message', message => {
-  // Voice only works in guilds, if the message does not come from a guild,
-  // we ignore it
-  if (!message.guild) return;
-
-  if (message.content === '/join') {
-    // Only try to join the sender's voice channel if they are in one themselves
-    if (message.member.voiceChannel && voiceChannels.indexOf(message.member.voiceChannel.id)) {
-      voiceChannels.push(message.member.voiceChannel.id);
-      voiceChannels.queue = [];
-      voiceChannels.queue.push('./audios/omae_wa_mou.mp3');
-      voiceChannels.queue.push('./audios/nani.mp3');
-      message.member.voiceChannel.join()
-        .then(voiceConnection => { // Connection is an instance of VoiceConnection
-          player(voiceConnection, voiceChannels.queue);
-        })
-        .catch(console.log);
-    } else {
-      message.reply('You need to join a voice channel first!');
-    }
-  }
+client.on('ready', () => {
+  voiceChannels.forEach(voiceChannel => {
+    client.channels.get(voiceChannel.id).join()
+      .then(voiceConnection => {
+        voiceChannel.voiceConnection = voiceConnection;
+        voiceChannel.receiver = voiceConnection.createReceiver();
+        player(voiceConnection, voiceChannel.queue);
+      });
+  });
 });
+
+client.on('guildMemberSpeaking', (user, speaking) => {
+  if (user.speaking){
+    let audioStream = voiceChannels[0].receiver.createPCMStream(user);
+    let outputStream = generateOutputFile(voiceChannels[0], user);
+    audioStream.pipe(outputStream);
+    outputStream.on("data", console.log);
+    audioStream.on('end', () => {
+      console.log('done');
+    });
+    return;
+  }
+  console.log('stop speaking');
+})
+
+// make a new stream for each time someone starts to talk
+function generateOutputFile(channel, member) {
+  // use IDs instead of username cause some people have stupid emojis in their name
+  const fileName = `./recordings/${channel.id}-${member.id}-${Date.now()}.pcm`;
+  return fs.createWriteStream(fileName);
+}
