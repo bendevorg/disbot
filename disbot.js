@@ -29,6 +29,7 @@ client.on('ready', () => {
   });
 });
 
+/**
 client.on('guildMemberSpeaking', (user, speaking) => {
   if (user.speaking){
     let audioStream = voiceChannels[0].receiver.createPCMStream(user);
@@ -41,7 +42,8 @@ client.on('guildMemberSpeaking', (user, speaking) => {
     return;
   }
   console.log('stop speaking');
-})
+});
+**/
 
 // make a new stream for each time someone starts to talk
 function generateOutputFile(channel, member) {
@@ -49,3 +51,5 @@ function generateOutputFile(channel, member) {
   const fileName = `./recordings/${channel.id}-${member.id}-${Date.now()}.pcm`;
   return fs.createWriteStream(fileName);
 }
+
+module.exports = voiceChannels;
