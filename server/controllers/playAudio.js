@@ -10,7 +10,11 @@ module.exports = (req, res) => {
     return res.status(404).json({
       msg: constants.error.AUDIO_ID_NOT_FOUND
     });
-  voiceChannels[0].queue.push(audioList[audioId]);
+  let audio = {
+    type: constants.audio.type.FILE,
+    source: audioList[audioId]
+  };
+  voiceChannels[0].queue.push(audio);
   if (!voiceChannels[0].playing)
     player(voiceChannels[0]);
   return res.status(200).json({

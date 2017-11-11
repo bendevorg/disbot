@@ -16,7 +16,11 @@ module.exports = (req, res) => {
   }
   else
     stream = url;
-  voiceChannels[0].queue.push(stream);
+  let audio = {
+    type: constants.audio.type.STREAM,
+    source: stream
+  };
+  voiceChannels[0].queue.push(audio);
   if (!voiceChannels[0].playing)
     player(voiceChannels[0]);
   res.status(200).json({

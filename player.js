@@ -1,3 +1,5 @@
+const constants = require('./server/utils/constants');
+
 const player = (voiceChannel) => {
   if (voiceChannel.queue.length == 0){
     voiceChannel.playing = false;
@@ -5,8 +7,16 @@ const player = (voiceChannel) => {
     return;
   }
   voiceChannel.playing = true;
-  //const dispatcher = voiceChannel.voiceConnection.playFile(voiceChannel.queue[0]);
-  const dispatcher = voiceChannel.voiceConnection.playStream(voiceChannel.queue[0]);
+  const audio = voiceChannel.queue[0];
+  let dispatcher;
+  switch(audio.type){
+    case constants.audio.type.FILE:
+      dispatcher = voiceChannel.voiceConnection.playFile(audio.source);
+      break;
+    case constants.audio.type.STREAM:
+      dispatcher = voiceChannel.voiceConnection.playStream(audio.source);
+      break;
+  }
   dispatcher.on('end', () => {
     voiceChannel.queue.shift();
     return player(voiceChannel);
