@@ -11,8 +11,8 @@ module.exports = (req, res) => {
       msg: constants.error.AUDIO_ID_NOT_FOUND
     });
   voiceChannels[0].queue.push(audioList[audioId]);
-  console.log(voiceChannels[0].queue);
-  player(voiceChannels[0].voiceConnection, voiceChannels[0].queue);
+  if (!voiceChannels[0].playing)
+    player(voiceChannels[0]);
   return res.status(200).json({
     msg: constants.info.AUDIO_ADDED_QUEUE
   });

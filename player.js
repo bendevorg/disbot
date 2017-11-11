@@ -1,11 +1,13 @@
-const player = (voiceConnection, queue) => {
-  if (queue.length == 0){
+const player = (voiceChannel) => {
+  if (voiceChannel.queue.length == 0){
+    voiceChannel.playing = false;
     return;
   }
-  const dispatcher = voiceConnection.playFile(queue[0]);
+  voiceChannel.playing = true;
+  const dispatcher = voiceChannel.voiceConnection.playFile(voiceChannel.queue[0]);
   dispatcher.on('end', () => {
-    queue.shift();
-    player(voiceConnection, queue);
+    voiceChannel.queue.shift();
+    return player(voiceChannel);
   });
 };
 

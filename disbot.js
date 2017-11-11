@@ -24,7 +24,6 @@ client.on('ready', () => {
       .then(voiceConnection => {
         voiceChannel.voiceConnection = voiceConnection;
         voiceChannel.receiver = voiceConnection.createReceiver();
-        player(voiceConnection, voiceChannel.queue);
       });
   });
 });
