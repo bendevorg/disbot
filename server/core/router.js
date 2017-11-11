@@ -11,6 +11,6 @@ router.get('/', (req, res) => {
   res.status(200).json({msg: 'Hi!'});
 });
 
-router.get('/play/audioId', playAudio);
+router.get('/play/:audioId', playAudio);
 
 module.exports = router;
