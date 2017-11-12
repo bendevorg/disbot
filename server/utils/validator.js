@@ -1,3 +1,4 @@
+const _ = require('underscore');
 const audioList = require('./audioList');
 const constants = require('./constants');
 
@@ -9,7 +10,18 @@ function isValidUrl(url){
   return constants.regex.URL.test(url);
 }
 
+/**
+ * Validate if the input is a valid not empty string
+ *
+ * @param {string} stringToValidate - String to be validated
+ * @return {boolean} - True case the string is valid and false if it is not
+ */
+function isValidString(stringToValidate) {
+  return _.isString(stringToValidate) && stringToValidate.trim().length > 0;
+};
+
 module.exports = {
   isValidAudioId: isValidAudioId,
-  isValidUrl: isValidUrl
+  isValidUrl: isValidUrl,
+  isValidString: isValidString
 };

@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
   const api_key = req.headers['api-key'];
   if (!validator.isValidString(api_key))
     return res.status(401).json({
-      msg: constants.messages.error.NO_ACCESS_TO_API_KEY 
+      msg: constants.messages.error.INVALID_API_KEY 
     });
 
   decryptApiKey(api_key)
@@ -29,7 +29,7 @@ module.exports = (req, res, next) => {
         .then(apiUser => {
           if (!apiUser)
             return res.status(401).json({
-              msg: constants.messages.error.NO_ACCESS_TO_API_KEY 
+              msg: constants.messages.error.INVALID_API_KEY 
             });
           req.apiUser = apiUser;
           return next();
@@ -44,7 +44,7 @@ module.exports = (req, res, next) => {
     .catch(err => {
       if (err instanceof SyntaxError)
         return res.status(401).json({
-          msg: constants.messages.error.NO_ACCESS_TO_API_KEY 
+          msg: constants.messages.error.INVALID_API_KEY 
         });
       logger.error(err);
       return res.status(500).json({

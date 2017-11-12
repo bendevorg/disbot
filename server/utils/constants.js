@@ -4,7 +4,8 @@ module.exports = {
       AUDIO_ID_NOT_FOUND: 'This audio id was not found in our database.',
       INVALID_URL: 'The url sent is invalid',
       INVALID_API_KEY: 'This is not a valid API key.',
-      INVALID_USER_DATA: 'This is not a valid user data.'
+      INVALID_USER_DATA: 'This is not a valid user data.',
+      UNEXPECTED: 'An unexpected error occurred, please try again.'
     },
     info: {
       AUDIO_ADDED_QUEUE: 'Your audio was added to the bot queue.'

@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   res.status(200).json({msg: 'Hi!'});
 });
 
-router.get('/play/file/:audioId', playAudio);
+router.get('/play/file/:audioId', middleware, playAudio);
 router.get('/play/stream', playStream);
 
 module.exports = router;
