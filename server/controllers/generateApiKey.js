@@ -1,7 +1,7 @@
 /**
  * Module to create API Keys
  * @module utils/generateApiKey
- */
+*/
 const database = require('../models/database');
 const encryptApiKey = require('../utils/encryptApiKey');
 const validator = require('../utils/validator');

@@ -18,6 +18,11 @@ module.exports = {
     type: {
       FILE: 0,
       STREAM: 1
-    }  
+    },
+    mimetypes: {
+      'audio/mpeg': '.mp3',
+      'audio/ogg': '.ogg',
+      'audio/wav': '.wav'
+    }
   }
 };
