@@ -1,6 +1,6 @@
 'user strict';
 
-//const logger = require('../../tools/logger');
+const logger = require('../../tools/logger');
 
 const fs = require('fs');
 const path = require('path');
@@ -26,7 +26,7 @@ sequelize
   })
   .catch(err => {
     console.log(err);
-    //logger.critical(err);
+    logger.critical(err);
   });
 
 let database = {};
@@ -56,7 +56,7 @@ database.sequelize.sync()
   })
   .catch(err => {
     console.log(err);
-    //logger.critical(err);
+    logger.critical(err);
   });
 
 module.exports = database;
