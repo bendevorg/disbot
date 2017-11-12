@@ -1,10 +1,14 @@
 module.exports = {
-  error: {
-    AUDIO_ID_NOT_FOUND: 'This audio id was not found in our database.',
-    INVALID_URL: 'The url sent is invalid'
-  },
-  info: {
-    AUDIO_ADDED_QUEUE: 'Your audio was added to the bot queue.'
+  messages: {
+    error: {
+      AUDIO_ID_NOT_FOUND: 'This audio id was not found in our database.',
+      INVALID_URL: 'The url sent is invalid',
+      INVALID_API_KEY: 'This is not a valid API key.',
+      INVALID_USER_DATA: 'This is not a valid user data.'
+    },
+    info: {
+      AUDIO_ADDED_QUEUE: 'Your audio was added to the bot queue.'
+    }
   },
   regex: {
     URL: /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/i

@@ -8,7 +8,7 @@ module.exports = (req, res) => {
   let {url} = req.query;
   if(!validator.isValidUrl(url))
     return res.status(400).json({
-      msg: constants.error.INVALID_URL
+      msg: constants.messages.error.INVALID_URL
     });
   let stream;
   if (ytdl.validateURL(url)) {
@@ -24,6 +24,6 @@ module.exports = (req, res) => {
   if (!voiceChannels[0].playing)
     player(voiceChannels[0]);
   res.status(200).json({
-    msg: constants.info.AUDIO_ADDED_QUEUE
+    msg: constants.messages.info.AUDIO_ADDED_QUEUE
   });
 };

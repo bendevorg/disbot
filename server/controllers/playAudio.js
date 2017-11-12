@@ -8,7 +8,7 @@ module.exports = (req, res) => {
   let {audioId} = req.params;
   if (!validator.isValidAudioId(audioId))
     return res.status(404).json({
-      msg: constants.error.AUDIO_ID_NOT_FOUND
+      msg: constants.messages.error.AUDIO_ID_NOT_FOUND
     });
   let audio = {
     type: constants.audio.type.FILE,
@@ -18,6 +18,6 @@ module.exports = (req, res) => {
   if (!voiceChannels[0].playing)
     player(voiceChannels[0]);
   return res.status(200).json({
-    msg: constants.info.AUDIO_ADDED_QUEUE
+    msg: constants.messages.info.AUDIO_ADDED_QUEUE
   });
 };

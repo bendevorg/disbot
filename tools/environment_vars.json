@@ -2,7 +2,8 @@
   "development":{
     "NODE_ENV": "development",
     "PORT": 3102,
-    "HOST": "http://localhost:3102"
+    "HOST": "http://localhost:3102",
+    "API_KEY_ENCRYPTATION": "TEST_ENCRYPTATION_KEY"
   },
   "production":{
     "NODE_ENV": "production",
