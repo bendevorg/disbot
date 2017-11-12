@@ -7,6 +7,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const player = require('./player');
+const database = require('./server/models/database');
 
 let voiceChannels = [{
   id: '144890708875018242',
