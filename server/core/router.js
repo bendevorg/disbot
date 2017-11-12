@@ -7,6 +7,7 @@ router.use(bodyParser.json());
 const middleware = require('../controllers/middleware');
 const playAudio = require('../controllers/playAudio');
 const playStream = require('../controllers/playStream');
+const generateApiKey = require('../controllers/generateApiKey');
 
 //  Placeholder API
 router.get('/', (req, res) => {
@@ -15,5 +16,8 @@ router.get('/', (req, res) => {
 
 router.get('/play/file/:audioId', middleware, playAudio);
 router.get('/play/stream', playStream);
+
+// We won`t let new api keys to be generated for now
+//router.post('/create/api_key', generateApiKey);
 
 module.exports = router;
