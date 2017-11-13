@@ -1,5 +1,5 @@
 const voiceChannels = require('../../disbot');
-const player = require('../../player');
+const player = require('../player/player');
 const validator = require('../utils/validator');
 const constants = require('../utils/constants');
 const ytdl = require('ytdl-core');

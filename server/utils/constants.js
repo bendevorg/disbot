@@ -15,7 +15,8 @@ module.exports = {
     }
   },
   regex: {
-    URL: /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/i
+    URL: /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/i,
+    UUIDV4: /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
   },
   audio: {
     type: {
@@ -33,6 +34,7 @@ module.exports = {
     MAX_STRING_SIZE: 255
   },
   paths: {
-    AUDIOS_FOLDER: '/../../audios' 
+    AUDIOS_FOLDER: '/../player/audios',
+    AUDIOS_LOCAL_FOLDER: './audios/'
   }
 };

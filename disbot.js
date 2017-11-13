@@ -6,7 +6,6 @@ dotenv.config();
 const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const player = require('./player');
 const database = require('./server/models/database');
 const logger = require('./tools/logger');
 

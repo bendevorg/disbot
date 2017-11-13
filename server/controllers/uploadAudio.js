@@ -15,8 +15,8 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     let {audioName} = req.body;
     file.audioName = audioName.trim();
-    audioName = file.audioName + '-' + Date.now() + file.suffix;
-    file.localDestination = constants.paths.AUDIOS_FOLDER + '/' + audioName;
+    audioName = file.audioName + file.suffix;
+    file.localDestination = constants.paths.AUDIOS_LOCAL_FOLDER + audioName;
     cb(null, audioName);
   }
 });

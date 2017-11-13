@@ -1,9 +1,8 @@
 const _ = require('underscore');
-const audioList = require('./audioList');
 const constants = require('./constants');
 
 function isValidAudioId(audioId) {
-  return Number.isInteger(parseInt(audioId)) && audioList[audioId];
+  return _.isString(audioId) && constants.regex.UUIDV4.test(audioId);
 }
 
 function isValidUrl(url){

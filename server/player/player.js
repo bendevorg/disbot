@@ -1,4 +1,4 @@
-const constants = require('./server/utils/constants');
+const constants = require('../utils/constants');
 
 const player = (voiceChannel) => {
   if (voiceChannel.queue.length == 0){
@@ -18,6 +18,11 @@ const player = (voiceChannel) => {
       break;
   }
   dispatcher.on('end', () => {
+    voiceChannel.queue.shift();
+    return player(voiceChannel);
+  });
+  dispatcher.on('error', (err) => {
+    logger.error(err);
     voiceChannel.queue.shift();
     return player(voiceChannel);
   });
