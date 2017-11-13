@@ -73,3 +73,6 @@ typings/
 
 # Credentials folder
 .credentials/
+
+# Audio folder
+audios/

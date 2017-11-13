@@ -14,7 +14,8 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     let {audioName} = req.body;
-    audioName = audioName.trim() + file.suffix;
+    file.audioName = audioName.trim();
+    audioName = file.audioName + '-' + Date.now() + file.suffix;
     file.localDestination = constants.paths.AUDIOS_FOLDER + '/' + audioName;
     cb(null, audioName);
   }
@@ -52,9 +53,23 @@ module.exports = (req, res) => {
       return res.status(400).json({
         msg: constants.messages.error.INVALID_AUDIO_DATA
       });
-    console.log(req.file);
-    return res.status(200).json({
-      msg: constants.messages.info.AUDIO_UPLOADED
-    });
+    let addAudio = {
+      name: req.file.audioName,
+      path: req.file.localDestination
+    };
+    let newAudio = database.audio.build(addAudio);
+    newAudio
+      .save()
+      .then(createdAudio => {
+        return res.status(200).json({
+          msg: constants.messages.info.AUDIO_UPLOADED
+        });
+      })
+      .catch(err => {
+        logger.error(err);
+        return res.status(500).json({
+          msg: constants.messages.error.UNEXPECTED
+        });
+      });
   });
 };
