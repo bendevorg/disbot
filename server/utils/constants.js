@@ -7,6 +7,7 @@ module.exports = {
       INVALID_USER_DATA: 'This is not a valid user data.',
       INVALID_AUDIO_DATA: `The audio submited is invalid. 
       The file must be an audio file with no more than 5mb.`,
+      AUDIO_NAME_USED: 'This audio name is already in use.',
       UNEXPECTED: 'An unexpected error occurred, please try again.'
     },
     info: {
@@ -34,7 +35,7 @@ module.exports = {
     MAX_STRING_SIZE: 255
   },
   paths: {
-    AUDIOS_FOLDER: '/../player/audios',
+    AUDIOS_FOLDER: '/../../audios',
     AUDIOS_LOCAL_FOLDER: './audios/'
   }
 };

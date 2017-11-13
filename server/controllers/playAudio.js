@@ -1,6 +1,6 @@
 const database = require('../models/database');
 const voiceChannels = require('../../disbot');
-const player = require('../player/player');
+const player = require('./player');
 const validator = require('../utils/validator');
 const constants = require('../utils/constants');
 const logger = require('../../tools/logger');

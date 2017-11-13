@@ -1,4 +1,5 @@
 const constants = require('../utils/constants');
+const logger = require('../../tools/logger');
 
 const player = (voiceChannel) => {
   if (voiceChannel.queue.length == 0){

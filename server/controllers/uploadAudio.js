@@ -14,8 +14,8 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     let {audioName} = req.body;
-    file.audioName = audioName.trim();
-    audioName = file.audioName + file.suffix;
+    file.audioName = audioName.trim().toLowerCase();
+    audioName = file.audioName.replace(/ /g, '_') + '-' + Date.now() + file.suffix;
     file.localDestination = constants.paths.AUDIOS_LOCAL_FOLDER + audioName;
     cb(null, audioName);
   }
@@ -53,6 +53,7 @@ module.exports = (req, res) => {
       return res.status(400).json({
         msg: constants.messages.error.INVALID_AUDIO_DATA
       });
+
     let addAudio = {
       name: req.file.audioName,
       path: req.file.localDestination
