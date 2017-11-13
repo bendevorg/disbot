@@ -28,5 +28,11 @@ module.exports = {
       'audio/wav': '.wav'
     },
     MAX_FILE_SIZE: 5000000
+  },
+  values: {
+    MAX_STRING_SIZE: 255
+  },
+  paths: {
+    AUDIOS_FOLDER: '/../../audios' 
   }
 };

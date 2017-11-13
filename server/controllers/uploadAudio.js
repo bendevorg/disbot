@@ -3,21 +3,29 @@
  * @module controllers/middleware
 */
 
+const database = require('../models/database');
 const constants = require('../utils/constants');
+const validator = require('../utils/validator');
 
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __dirname + '/../../audios');
+    cb(null, __dirname + constants.paths.AUDIOS_FOLDER);
   },
   filename: (req, file, cb) => {
-    cb(null, file.fieldname + file.suffix);
-  },
+    let {audioName} = req.body;
+    audioName = audioName.trim() + file.suffix;
+    file.localDestination = constants.paths.AUDIOS_FOLDER + '/' + audioName;
+    cb(null, audioName);
+  }
 });
 const limits = {
   fileSize: constants.audio.MAX_FILE_SIZE
 };
 const fileFilter = (req, file, cb) => {
+  const {audioName} = req.body;
+  if (!validator.isValidString(audioName))
+    return cb(null, false); 
   const fileSuffix = constants.audio.MIMETYPES[file.mimetype];
   if (!fileSuffix)
     return cb(null, false);
@@ -40,10 +48,11 @@ const logger = require('../../tools/logger');
 */
 module.exports = (req, res) => {
   upload(req, res, err => {
-    if (err)
+    if (err || !req.file)
       return res.status(400).json({
         msg: constants.messages.error.INVALID_AUDIO_DATA
       });
+    console.log(req.file);
     return res.status(200).json({
       msg: constants.messages.info.AUDIO_UPLOADED
     });
