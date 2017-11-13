@@ -8,14 +8,24 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const player = require('./player');
 const database = require('./server/models/database');
+const logger = require('./tools/logger');
 
-let voiceChannels = [{
-  id: '144890708875018242',
-  voiceConnection: null,
-  receiver: null,
-  queue: [],
-  playing: false,
-}];
+let voiceChannels = [
+  {
+    id: '235440398334427138',
+    voiceConnection: null,
+    receiver: null,
+    queue: [],
+    playing: false
+  },
+  {
+    id: '144890708875018242',
+    voiceConnection: null,
+    receiver: null,
+    queue: [],
+    playing: false
+  }
+];
 
 client.login(process.env.DISCORD_TOKEN);
 
@@ -25,8 +35,16 @@ client.on('ready', () => {
       .then(voiceConnection => {
         voiceChannel.voiceConnection = voiceConnection;
         voiceChannel.receiver = voiceConnection.createReceiver();
-      });
+      })
+      .catch(err => {
+        logger.critical(err);
+      })
   });
+});
+
+client.on('message', message => {
+  if (message === '/info')
+    console.log(message);
 });
 
 /**
