@@ -8,6 +8,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 const middleware = require('../controllers/middleware');
 const playAudio = require('../controllers/playAudio');
 const playStream = require('../controllers/playStream');
+const audioList = require('../controllers/audioList');
 const uploadAudio = require('../controllers/uploadAudio');
 const generateApiKey = require('../controllers/generateApiKey');
 
@@ -18,6 +19,7 @@ router.get('/', (req, res) => {
 
 router.get('/play/file/:audioId', middleware, playAudio);
 router.get('/play/stream', playStream);
+router.get('/audios', audioList);
 router.post('/upload', uploadAudio);
 
 // We won`t let new api keys to be generated for now

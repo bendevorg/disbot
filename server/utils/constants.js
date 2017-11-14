@@ -8,6 +8,7 @@ module.exports = {
       INVALID_AUDIO_DATA: `The audio submited is invalid. 
       The file must be an audio file with no more than 5mb.`,
       AUDIO_NAME_USED: 'This audio name is already in use.',
+      EMPTY_AUDIO_LIST: 'There is no audio file saved at the moment.',
       UNEXPECTED: 'An unexpected error occurred, please try again.'
     },
     info: {
