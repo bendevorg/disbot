@@ -33,7 +33,8 @@ module.exports = {
     MAX_FILE_SIZE: 5000000
   },
   values: {
-    MAX_STRING_SIZE: 255
+    MAX_STRING_SIZE: 255,
+    AUDIO_LIST_CACHE_TIME_IN_SECONDS: 60 * 60 * 24
   },
   paths: {
     AUDIOS_FOLDER: '/../../audios',
