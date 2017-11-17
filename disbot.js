@@ -11,14 +11,14 @@ const logger = require('./tools/logger');
 
 let voiceChannels = [
   {
-    id: '235440398334427138',
+    id: '144890708875018242',
     voiceConnection: null,
     receiver: null,
     queue: [],
     playing: false
   },
   {
-    id: '144890708875018242',
+    id: '235440398334427138',
     voiceConnection: null,
     receiver: null,
     queue: [],

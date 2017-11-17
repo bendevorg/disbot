@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="alert alert-success" id="success-alert">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>Success! </strong>
+        Product have added to your wishlist.
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+            <div id="cards">
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  function playAudio(audio){
+    $.ajax({
+      type: 'GET',
+      url: $(location).attr('href') + 'api/play/file/' + audio.id,
+      beforeSend: function(request) {
+        request.setRequestHeader('api-key', 'U2FsdGVkX19qtaZkpLqZOlIxAE7Zg9iafiJX+O06KIGv5tmlyWYMG1Ghd9kTuyc2s0HIc2BS9YkHJ8JNOVKG2eKRcN80+scuWyhVHIewFnzIcI2DZnel/B6Zjo4ha/xwXk2IdbSp4euXt3GPdGLh5JyTpwGP+JKZSxuk/iEb01OvvtT0hSwRuB+quJQESFdSCj817mu4GaOjRrlLV4mXqEcEU959m9jV+iyGr2z2m0Y=');
+      },
+      success: function(jsonData){
+        $('#success-alert').fadeTo(2000, 500).slideUp(500, function(){
+          $('#success-alert').slideUp(500);
+        }); 
+      }
+    });
+  }
+  $(document).ready(function(){
+    $('#success-alert').hide();
+    $.ajax({
+      type: 'GET',
+      url: $(location).attr('href') + 'api/audios',
+      //contentType: "application/json; charset=utf-8",
+      //data: JSON.stringify(itemInfo),
+      //dataType: "json",
+      beforeSend: function(){
+        console.log('Sending');
+      },
+      success: function(jsonData) {
+        if (jsonData && jsonData.msg.length > 0){
+          jsonData.msg.forEach(function(audio){
+            var button = '<button onclick="playAudio(this)" type="button" id="' + audio.id + '" class="btn btn-info btn-lg">' + audio.name + '</button>';
+            $('#cards').append(button);
+          });
+        }
+      },
+      error: function(errorData) {
+        console.log(errorData);
+        //showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
+        //$('#' + this.id).removeClass('disabled');
+      }
+    });
+  });
+</script>
