@@ -7,11 +7,21 @@
   </head>
   <body>
     <div class="alert alert-success" id="success-alert">
-        <button type="button" class="close" data-dismiss="alert">x</button>
-        <strong>Success! </strong>
-        Product have added to your wishlist.
+      <button type="button" class="close" data-dismiss="alert">x</button>
+      <strong>Audio enviado! </strong>
+      O seu audio foi enviado e sera tocado em breve.
     </div>
     <div class="container">
+      <div class="row">
+        <form>
+          <div class="form-group">
+            <label for="url">Url:</label>
+            <input type="url" class="form-control" id="url">
+          </div>
+          <button type="submit" class="btn btn-default">Play url</button>
+        </form>
+      </div>
+      <strong>Lista de sons</strong>
       <div class="row">
         <div class="col-8">
             <div id="cards">
@@ -38,6 +48,21 @@
   }
   $(document).ready(function(){
     $('#success-alert').hide();
+    $('form').submit(function(e){
+      e.preventDefault(e);
+      $.ajax({
+        type: 'GET',
+        url: $(location).attr('href') + 'api/play/stream?url=' + $('#url').val(),
+        beforeSend: function(request) {
+          request.setRequestHeader('api-key', 'U2FsdGVkX19qtaZkpLqZOlIxAE7Zg9iafiJX+O06KIGv5tmlyWYMG1Ghd9kTuyc2s0HIc2BS9YkHJ8JNOVKG2eKRcN80+scuWyhVHIewFnzIcI2DZnel/B6Zjo4ha/xwXk2IdbSp4euXt3GPdGLh5JyTpwGP+JKZSxuk/iEb01OvvtT0hSwRuB+quJQESFdSCj817mu4GaOjRrlLV4mXqEcEU959m9jV+iyGr2z2m0Y=');
+        },
+        success: function(jsonData){
+          $('#success-alert').fadeTo(2000, 500).slideUp(500, function(){
+            $('#success-alert').slideUp(500);
+          }); 
+        }
+      });
+    });
     $.ajax({
       type: 'GET',
       url: $(location).attr('href') + 'api/audios',
@@ -45,7 +70,6 @@
       //data: JSON.stringify(itemInfo),
       //dataType: "json",
       beforeSend: function(){
-        console.log('Sending');
       },
       success: function(jsonData) {
         if (jsonData && jsonData.msg.length > 0){
