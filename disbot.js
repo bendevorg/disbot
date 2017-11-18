@@ -15,6 +15,7 @@ let voiceChannels = [
     voiceConnection: null,
     receiver: null,
     queue: [],
+    dispatcher: null,
     playing: false
   },
   {
@@ -22,6 +23,7 @@ let voiceChannels = [
     voiceConnection: null,
     receiver: null,
     queue: [],
+    dispatcher: null,
     playing: false
   }
 ];

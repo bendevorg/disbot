@@ -1,6 +1,4 @@
 const database = require('../models/database');
-
-
 const constants = require('../utils/constants');
 const logger = require('../../tools/logger');
 

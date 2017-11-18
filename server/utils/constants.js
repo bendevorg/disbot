@@ -9,11 +9,13 @@ module.exports = {
       The file must be an audio file with no more than 5mb.`,
       AUDIO_NAME_USED: 'This audio name is already in use.',
       EMPTY_AUDIO_LIST: 'There is no audio file saved at the moment.',
+      NO_AUDIO_TO_SKIP: 'The playlist is empty.',
       UNEXPECTED: 'An unexpected error occurred, please try again.'
     },
     info: {
       AUDIO_ADDED_QUEUE: 'Your audio was added to the bot queue.',
-      AUDIO_UPLOADED: 'Your audio was added to our list.'
+      AUDIO_UPLOADED: 'Your audio was added to our list.',
+      AUDIO_SKIPPED: 'Audio skipped!'
     }
   },
   regex: {

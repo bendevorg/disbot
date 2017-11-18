@@ -9,21 +9,22 @@ const player = (voiceChannel) => {
   }
   voiceChannel.playing = true;
   const audio = voiceChannel.queue[0];
-  let dispatcher;
   switch(audio.type){
     case constants.audio.type.FILE:
-      dispatcher = voiceChannel.voiceConnection.playFile(audio.source);
+      voiceChannel.dispatcher = voiceChannel.voiceConnection.playFile(audio.source);
       break;
     case constants.audio.type.STREAM:
-      dispatcher = voiceChannel.voiceConnection.playStream(audio.source);
+      voiceChannel.dispatcher = voiceChannel.voiceConnection.playStream(audio.source);
       break;
   }
-  dispatcher.on('end', () => {
+  voiceChannel.dispatcher.on('end', () => {
+    voiceChannel.dispatcher = null;
     voiceChannel.queue.shift();
     return player(voiceChannel);
   });
-  dispatcher.on('error', (err) => {
+  voiceChannel.dispatcher.on('error', (err) => {
     logger.error(err);
+    voiceChannel.dispatcher = null;
     voiceChannel.queue.shift();
     return player(voiceChannel);
   });

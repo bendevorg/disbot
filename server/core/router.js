@@ -10,6 +10,7 @@ const playAudio = require('../controllers/playAudio');
 const playStream = require('../controllers/playStream');
 const audioList = require('../controllers/audioList');
 const uploadAudio = require('../controllers/uploadAudio');
+const skipAudio = require('../controllers/skipAudio');
 const generateApiKey = require('../controllers/generateApiKey');
 
 //  Placeholder API
@@ -20,6 +21,7 @@ router.get('/', (req, res) => {
 router.get('/play/file/:audioId', middleware, playAudio);
 router.get('/play/stream', playStream);
 router.get('/audios', audioList);
+router.get('/play/skip', skipAudio);
 router.post('/upload', uploadAudio);
 
 // We won`t let new api keys to be generated for now
