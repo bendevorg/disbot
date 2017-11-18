@@ -19,10 +19,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/play/file/:audioId', middleware, playAudio);
-router.get('/play/stream', playStream);
-router.get('/audios', audioList);
-router.get('/play/skip', skipAudio);
-router.post('/upload', uploadAudio);
+router.get('/play/stream', middleware, playStream);
+router.get('/audios', middleware, audioList);
+router.get('/play/skip', middleware, skipAudio);
+router.post('/upload', middleware, uploadAudio);
 
 // We won`t let new api keys to be generated for now
 //router.post('/create/api_key', generateApiKey);
