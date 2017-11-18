@@ -66,6 +66,11 @@ module.exports = (req, res) => {
           msg: constants.messages.info.AUDIO_UPLOADED
         });
       })
+      .catch(SequelizeUniqueConstraintError => {
+        return res.status(400).json({
+          msg: constants.messages.error.AUDIO_NAME_USED
+        });
+      })
       .catch(err => {
         logger.error(err);
         return res.status(500).json({

@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const router = express.Router();
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.urlencoded({ extended: false, limit:'5mb' }));
 
 const middleware = require('../controllers/middleware');
 const playAudio = require('../controllers/playAudio');

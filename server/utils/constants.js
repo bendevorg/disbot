@@ -29,6 +29,7 @@ module.exports = {
     },
     MIMETYPES: {
       'audio/mpeg': '.mp3',
+      'audio/mp3': '.mp3',
       'audio/ogg': '.ogg',
       'audio/wav': '.wav'
     },

@@ -11,15 +11,20 @@
       <strong>Audio enviado! </strong>
       O seu audio foi enviado e sera tocado em breve.
     </div>
+    <div class="alert alert-danger" id="error-alert">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>Error! </strong>
+        <p id="errorText"></p>
+      </div>
     <div class="container">
       <div class="row">
         <div class="col-6">
-          <form>
+          <form id="playUrlForm">
             <div class="form-group">
               <label for="url">Url:</label>
               <input type="url" class="form-control" id="url">
             </div>
-            <button type="submit" class="btn btn-default">Play url</button>
+            <button type="submit" class="btn btn-default" id="playUrl">Play url</button>
             <button onclick="skipAudio()" type="button" class="btn btn-default">Skip</button>
           </form>
         </div>
@@ -29,6 +34,19 @@
         <div class="col-8">
             <div id="cards">
             </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <strong>Adicione um áudio</strong>
+          <form id="uploadForm">
+            <div class="form-group">
+              <label for="name">Nome:</label>
+              <input name="audioName" type="name" class="form-control" id="audioName">
+              <input name="audio" type="file" id="audioFile">
+            </div>
+            <button type="submit" class="btn btn-default" id="uploadAudio">Upload audio</button>
+          </form>
         </div>
       </div>
     </div>
@@ -46,6 +64,12 @@
         $('#success-alert').fadeTo(2000, 500).slideUp(500, function(){
           $('#success-alert').slideUp(500);
         }); 
+      },
+      error: function(err) {
+        $('#errorText').html(err.responseJSON.msg);
+        $('#error-alert').fadeTo(2000, 500).slideUp(500, function(){
+          $('#error-alert').slideUp(1000);
+        }); 
       }
     });
   }
@@ -60,25 +84,69 @@
         $('#success-alert').fadeTo(2000, 500).slideUp(500, function(){
           $('#success-alert').slideUp(500);
         }); 
+      },
+      error: function(err) {
+        $('#errorText').html(err.responseJSON.msg);
+        $('#error-alert').fadeTo(2000, 500).slideUp(500, function(){
+          $('#error-alert').slideUp(1000);
+        }); 
       }
     });
   }
   $(document).ready(function(){
     $('#success-alert').hide();
+    $('#error-alert').hide();
     $('form').submit(function(e){
       e.preventDefault(e);
-      $.ajax({
-        type: 'GET',
-        url: $(location).attr('href') + 'api/play/stream?url=' + $('#url').val(),
-        beforeSend: function(request) {
-          request.setRequestHeader('api-key', 'U2FsdGVkX19qtaZkpLqZOlIxAE7Zg9iafiJX+O06KIGv5tmlyWYMG1Ghd9kTuyc2s0HIc2BS9YkHJ8JNOVKG2eKRcN80+scuWyhVHIewFnzIcI2DZnel/B6Zjo4ha/xwXk2IdbSp4euXt3GPdGLh5JyTpwGP+JKZSxuk/iEb01OvvtT0hSwRuB+quJQESFdSCj817mu4GaOjRrlLV4mXqEcEU959m9jV+iyGr2z2m0Y=');
-        },
-        success: function(jsonData){
-          $('#success-alert').fadeTo(2000, 500).slideUp(500, function(){
-            $('#success-alert').slideUp(500);
-          }); 
-        }
-      });
+      switch(e.target.id){
+        case 'playUrlForm':
+          $.ajax({
+            type: 'GET',
+            url: $(location).attr('href') + 'api/play/stream?url=' + $('#url').val(),
+            beforeSend: function(request) {
+              request.setRequestHeader('api-key', 'U2FsdGVkX19qtaZkpLqZOlIxAE7Zg9iafiJX+O06KIGv5tmlyWYMG1Ghd9kTuyc2s0HIc2BS9YkHJ8JNOVKG2eKRcN80+scuWyhVHIewFnzIcI2DZnel/B6Zjo4ha/xwXk2IdbSp4euXt3GPdGLh5JyTpwGP+JKZSxuk/iEb01OvvtT0hSwRuB+quJQESFdSCj817mu4GaOjRrlLV4mXqEcEU959m9jV+iyGr2z2m0Y=');
+            },
+            success: function(jsonData){
+              $('#success-alert').fadeTo(2000, 500).slideUp(500, function(){
+                $('#success-alert').slideUp(500);
+              }); 
+            },
+            error: function(err) {
+              $('#errorText').html(err.responseJSON.msg);
+              $('#error-alert').fadeTo(2000, 500).slideUp(500, function(){
+                $('#error-alert').slideUp(1000);
+              }); 
+            }
+          });
+          break;
+
+        case 'uploadForm':
+          var formData = new FormData(this);
+          $.ajax({
+            type: 'POST',
+            url: $(location).attr('href') + 'api/upload',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function(request) {
+              request.setRequestHeader('api-key', 'U2FsdGVkX19qtaZkpLqZOlIxAE7Zg9iafiJX+O06KIGv5tmlyWYMG1Ghd9kTuyc2s0HIc2BS9YkHJ8JNOVKG2eKRcN80+scuWyhVHIewFnzIcI2DZnel/B6Zjo4ha/xwXk2IdbSp4euXt3GPdGLh5JyTpwGP+JKZSxuk/iEb01OvvtT0hSwRuB+quJQESFdSCj817mu4GaOjRrlLV4mXqEcEU959m9jV+iyGr2z2m0Y=');
+            },
+            success: function(jsonData){
+              $('#success-alert').fadeTo(2000, 500).slideUp(500, function(){
+                $('#success-alert').slideUp(500);
+              }); 
+            },
+            error: function(err){
+              $('#errorText').html(err.responseJSON.msg);
+              $('#error-alert').fadeTo(2000, 500).slideUp(500, function(){
+                $('#error-alert').slideUp(1000);
+              }); 
+            }
+          });
+          break;
+      }
+    
     });
     $.ajax({
       type: 'GET',
