@@ -4,6 +4,7 @@
 */
 
 const database = require('../models/database');
+const cache = require('memory-cache');
 const constants = require('../utils/constants');
 const validator = require('../utils/validator');
 
@@ -62,6 +63,7 @@ module.exports = (req, res) => {
     newAudio
       .save()
       .then(createdAudio => {
+        cache.del(constants.values.AUDIO_LIST_CACHE_NAME);
         return res.status(200).json({
           msg: constants.messages.info.AUDIO_UPLOADED
         });
