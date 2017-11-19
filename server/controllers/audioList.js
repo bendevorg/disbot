@@ -4,7 +4,7 @@ const constants = require('../utils/constants');
 const logger = require('../../tools/logger');
 
 module.exports = (req, res) => {
-  const cachedAudioList = cache.get(constants.values.AUDIO_LIST_CACHE_NAME);
+  let cachedAudioList = cache.get(constants.values.AUDIO_LIST_CACHE_NAME);
   if (cachedAudioList)
     return res.status(200).json({
       msg: cachedAudioList
@@ -14,9 +14,16 @@ module.exports = (req, res) => {
     attributes: ['id', 'name', 'path']
   })
     .then(audioList => {
+      cachedAudioList = {};
+      audioList.forEach((audio) => {
+        cachedAudioList[audio.id] = {
+          name: audio.name,
+          path: audio.path
+        };
+      });
       cache.put(
         constants.values.AUDIO_LIST_CACHE_NAME, 
-        audioList, 
+        cachedAudioList, 
         constants.values.AUDIO_LIST_CACHE_TIME_IN_SECONDS
       );
       if (!audioList || audioList.length == 0)
@@ -24,7 +31,7 @@ module.exports = (req, res) => {
           msg: constants.messages.error.EMPTY_AUDIO_LIST
         });
       return res.status(200).json({
-        msg: audioList
+        msg: cachedAudioList
       });
     })
     .catch(err => {
