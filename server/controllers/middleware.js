@@ -4,6 +4,7 @@
 */
 
 const decryptApiKey = require('../utils/decryptApiKey');
+const cache = require('memory-cache');
 const validator = require('../utils/validator');
 const constants = require('../utils/constants');
 const database = require('../models/database');
@@ -22,7 +23,10 @@ module.exports = (req, res, next) => {
     return res.status(401).json({
       msg: constants.messages.error.INVALID_API_KEY 
     });
-
+  let cachedApiKeys = cache.get(constants.values.API_KEYS_CACHE_NAME);
+  if (cachedApiKeys && cachedApiKeys.includes(api_key)){
+    return next();
+  }
   decryptApiKey(api_key)
     .then(userData => {
       database.api_user.findById(userData.id)
@@ -31,7 +35,14 @@ module.exports = (req, res, next) => {
             return res.status(401).json({
               msg: constants.messages.error.INVALID_API_KEY 
             });
-          req.apiUser = apiUser;
+          if (!cachedApiKeys)
+            cachedApiKeys = [];
+          cachedApiKeys.push(api_key);
+          cache.put(
+            constants.values.API_KEYS_CACHE_NAME,
+            cachedApiKeys,
+            constants.values.AUDIO_LIST_CACHE_TIME_IN_SECONDS
+          );
           return next();
         })
         .catch(err => {

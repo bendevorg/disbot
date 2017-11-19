@@ -5,11 +5,10 @@ const logger = require('../../tools/logger');
 
 module.exports = (req, res) => {
   const cachedAudioList = cache.get(constants.values.AUDIO_LIST_CACHE_NAME);
-  if (cachedAudioList){
+  if (cachedAudioList)
     return res.status(200).json({
       msg: cachedAudioList
     });
-  }
   database.audio.findAll({
     raw: true,
     attributes: ['id', 'name', 'path']
