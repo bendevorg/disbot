@@ -158,11 +158,11 @@
         request.setRequestHeader('api-key', 'U2FsdGVkX19qtaZkpLqZOlIxAE7Zg9iafiJX+O06KIGv5tmlyWYMG1Ghd9kTuyc2s0HIc2BS9YkHJ8JNOVKG2eKRcN80+scuWyhVHIewFnzIcI2DZnel/B6Zjo4ha/xwXk2IdbSp4euXt3GPdGLh5JyTpwGP+JKZSxuk/iEb01OvvtT0hSwRuB+quJQESFdSCj817mu4GaOjRrlLV4mXqEcEU959m9jV+iyGr2z2m0Y=');
       },
       success: function(jsonData) {
-        if (jsonData && jsonData.msg.length > 0){
-          jsonData.msg.forEach(function(audio){
-            var button = '<button onclick="playAudio(this)" type="button" id="' + audio.id + '" class="btn btn-info btn-lg">' + audio.name + '</button>';
+        if (jsonData){
+          for (var key in jsonData.msg){
+            var button = '<button onclick="playAudio(this)" type="button" id="' + key + '" class="btn btn-info btn-lg">' + jsonData.msg[key].name + '</button>';
             $('#cards').append(button);
-          });
+          }
         }
       },
       error: function(errorData) {
